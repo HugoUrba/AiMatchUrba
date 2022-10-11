@@ -7,17 +7,15 @@ Created on Fri Oct  7 22:28:15 2022
 #########################################################################################################################
 # import / dependances
 import dash
-import dash_core_components as dcc    
-import dash_html_components as html
+#import dash_core_components as dcc
+#import dash_html_components as html
+from dash import html
+from dash import dcc
 
 import pandas as pd
 import numpy as np
 
 import plotly.express as px
-
-
-
-
 
 # importation données
 data = pd.read_csv('df_clean.csv')
@@ -33,6 +31,12 @@ populatActivite = data.iloc[:,41:57].mean().sort_values(ascending=False)
 etudeRenseigne=data['field_cd'].value_counts().sort_values(ascending=False)
 #print(etudeRenseigne.index)
 print(map(str,pd.unique(data['gender'])))
+
+#activités populaires test antoine
+activities=data.iloc[:,41:57]
+actvities_aff=pd.melt(activities)
+fig = px.box(actvities_aff, x="variable", y="value")
+
 #########################################################################################################################
 # DASH Application
 
@@ -65,11 +69,15 @@ app.layout = html.Div(children =[
                 'title':'Etudes des Célibataires'
             }
         }
+    ),
+
+    dcc.Graph(
+        id="example3",
+        figure=fig
     )
 ])
-
 #########################################################################################################################
 # Programme Main
 if __name__ == '__main__':
     print('Start')
-    #app.run_server() # démarrer l'application DASH
+    app.run_server() # démarrer l'application DASH
