@@ -31,7 +31,8 @@ populatActivite = data.iloc[:,41:57].mean().sort_values(ascending=False)
 
 #études les plus renseignées
 etudeRenseigne=data['field_cd'].value_counts().sort_values(ascending=False)
-print(etudeRenseigne.index)
+#print(etudeRenseigne.index)
+print(map(str,pd.unique(data['gender'])))
 #########################################################################################################################
 # DASH Application
 
@@ -41,6 +42,7 @@ app.layout = html.Div(children =[
     
     html.H1("Match Ai App"),
     
+    #dcc.Dropdown(pd.unique(data['gender'].values),'0'),
     dcc.Graph(
         id ="example",
         figure ={
@@ -52,6 +54,7 @@ app.layout = html.Div(children =[
             }
         }
     ),
+    
     dcc.Graph(
         id ="example2",
         figure ={
@@ -69,4 +72,4 @@ app.layout = html.Div(children =[
 # Programme Main
 if __name__ == '__main__':
     print('Start')
-    app.run_server() # démarrer l'application DASH
+    #app.run_server() # démarrer l'application DASH
