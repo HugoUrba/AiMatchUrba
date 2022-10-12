@@ -22,6 +22,7 @@ data = pd.read_csv('df_clean.csv')
 print(data.info())
 
 
+
 #activités les plus populaires
 populatActivite = data.iloc[:,41:57].mean().sort_values(ascending=False)
 #print(populatActivite.array)#.index
