@@ -6,14 +6,16 @@ Created on Fri Oct  7 22:28:15 2022
 """
 #########################################################################################################################
 # import / dependances
-import dash
-import dash_bootstrap_components as dbc
-import dash_core_components as dcc
-import dash_html_components as html
-from dash.dependencies import Input, Output
-#from dash import html
-#from dash import dcc
+#pip install -Iv dash-bootstrap-components==0.11.0
 
+import dash
+#import dash_core_components as dcc
+#import dash_html_components as html
+from dash import html
+from dash import dcc
+import dash_bootstrap_components as dbc
+
+from dash.dependencies import Input, Output
 import pandas as pd
 import numpy as np
 
@@ -21,10 +23,10 @@ import plotly.express as px
 import plotly.graph_objs as go
 
 
+
 # importation données
 data = pd.read_csv('train.csv',on_bad_lines="skip",delimiter=";")
 #print(data.info())
-
 
 #graphique décision
 decision=data.loc[:,('dec_o','gender','age','career_c')]
@@ -71,7 +73,6 @@ app.layout = html.Div([
     dcc.Location(id="url"),
     sidebar,
     content
-
 ])
 
 @app.callback(
