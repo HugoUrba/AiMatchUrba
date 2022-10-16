@@ -1,9 +1,9 @@
 # import / dependances
 import dash
-import dash_core_components as dcc
-import dash_html_components as html
-#from dash import html
-#from dash import dcc
+#import dash_core_components as dcc
+#import dash_html_components as html
+from dash import html
+from dash import dcc
 from dash.dependencies import Input, Output
 import pandas as pd
 import numpy as np
@@ -37,17 +37,21 @@ data.loc[:,'career_c'][data.loc[:,'career_c']==14]='Athletics'
 data.loc[:,'career_c'][data.loc[:,'career_c']==15]='Other'
 data.loc[:,'career_c'][data.loc[:,'career_c']==17]='Architecture'
 #recodage âge
-data['age'][data.loc[:,'age']<23]=1
+data['age'][data['age']<23]=1
 data['age'][(data['age']>22) & (data['age']<28)]=2
 data['age'][(data['age']>27) & (data['age']<33)]=3
 data['age'][(data['age']>32) & (data['age']<38)]=4
 data['age'][data['age']>37] = 5
-
 data['age'][data['age']==1]='[18-22]'
 data['age'][data['age']==2]='[23-27]'
 data['age'][data['age']==3]='[28-32]'
 data['age'][data['age']==4]='[33-37]'
 data['age'][data['age']==5]='38+'
+#remplacer ',' par '.' pour var quanti et changer nom col
+data['income']=data['income'].replace(",","",regex=True)
+data['income']=data['income'].astype(float)
+data.iloc[:,64:70]=data.iloc[:,64:70].replace(",",".",regex=True)
+data.iloc[:,64:70]=data.iloc[:,64:70].astype(float)
 
 #graph répartition âge
 datanew=data.loc[:,('iid','age')]
@@ -59,10 +63,8 @@ datanew=data.loc[:,('iid','career_c')]
 datanew=datanew.drop_duplicates()
 datacar=datanew['career_c']
 
-
-
 #graphique décision
-decision=data.loc[:,('dec_o','gender','age','career_c')]
+decision=data.loc[:,('dec_o','gender','age','career_c','income')]
 
 
 app = dash.Dash()
@@ -96,23 +98,65 @@ app.layout = html.Div([
             options=[
                     {'label': 'Sexe', 'value': 'gender'},
                     {'label': 'Travail', 'value': 'career_c'},
-                     {'label': 'Age', 'value': 'age'},
+                    {'label': 'Age', 'value': 'age'}
                     ],className='select_categ',
              value='gender'),
 
         dcc.Graph(id='graph_output')
     ],
-        style={'border' : '1px black solid','float':'left','width':'99%','height':'350px'}),
+        style={'border' : '1px black solid','float':'left','width':'99%','height':'600px'}),
+
+    html.Div(children=[
+
+        dcc.Dropdown(id='dropdown_input',
+                    options=[{'label': 'Attractive', 'value': 'attr1_1'},
+                    {'label': 'Sincere', 'value': 'sinc1_1'},
+                    {'label': 'Intelligent', 'value': 'intel1_1'},
+                    {'label': 'Fun', 'value': 'fun1_1'},
+                    {'label': 'Ambitious', 'value': 'amb1_1'},
+                    {'label': ' Has shared interests/hobbies', 'value': 'shar1_1'}],
+                     value='attr1_1'),
+
+        dcc.RadioItems(id='radio_input',
+                       options=[
+                           {'label': 'Sexe', 'value': 'gender'},
+                           {'label': 'Age', 'value': 'age'}
+                       ],
+                       value='gender'),
+
+        dcc.Graph(id='boxplot_output')
+    ],
+        style={'border' : '1px black solid','float':'left','width':'99%','height':'600px'})
+
 ])
 
 @app.callback(
     Output(component_id='graph_output', component_property='figure'),
-    Input(component_id='select_input', component_property='value')
-)
+    Input(component_id='select_input', component_property='value'))
 def get_data_table(option):
     val = decision.loc[:, option]
     fig = go.Figure(data=[go.Histogram(histfunc="avg",x=val,y=decision.iloc[:,0])])
-    fig.update_layout(title_text='Pourcentage de oui reçus', title_x=0.5)
+    if (option=='gender'):
+        fig.update_layout(title_text="Pourcentage de oui reçus selon le sexe", title_x=0.5)
+    elif (option=='age'):
+        fig.update_layout(title_text="Pourcentage de oui reçus selon l'âge", title_x=0.5)
+    elif (option=='career_c'):
+        fig.update_layout(title_text="Pourcentage de oui reçus selon le type de travail", title_x=0.5)
+
+    return fig
+
+@app.callback(
+    Output(component_id='boxplot_output', component_property='figure'),
+    Input(component_id='radio_input', component_property='value'),
+    Input(component_id='dropdown_input', component_property='value'))
+def make_box(abs,ord):
+    x_abs=data.loc[:,abs]
+    y_ord=data.loc[:,ord]
+    fig = go.Figure(data=[go.Box(x=x_abs,y=y_ord)])
+    if (abs=='gender'):
+        fig.update_layout(title_text="Importance de critères selon le sexe", title_x=0.5)
+    elif (abs=='age'):
+        fig.update_layout(title_text="Importance de critères selon l'âge", title_x=0.5)
     return fig
 
 
