@@ -92,7 +92,7 @@ Ici par exemple le graphique affiché sera un boxplot, fait avec la commande go.
 
  ## Informations fichiers
 
-Dans le folder data, on retrouve les bases de données qu'on a utilisé:
+Dans le répertoire data, on retrouve les bases de données qu'on a utilisé:
 
 [La base de données initiale](https://github.com/MaartinShz/AIMatch/blob/0d9e8f2b394d4f50eab6a09209255c710708d09d/data/train.csv), sans aucune retouche
 
@@ -117,4 +117,4 @@ Dans les fichiers restants on a:
 
 [Fichier de configuration Heroku](https://github.com/MaartinShz/AIMatch/blob/59d320783bda7fd0a304b97bb3bc75e92816a47b/Procfile)
 
-Dans le folder assets, on a les éléments visuels nécessaires à notre application
+Dans le répertoire assets, on a les éléments visuels nécessaires à notre application
