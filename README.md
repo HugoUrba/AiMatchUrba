@@ -85,6 +85,36 @@ def make_box(abs,ord):
         fig.update_layout(title_text="Importance de critères selon l'âge", title_x=0.5)
     return fig
 ```
-Ici par exemple le graphique affiché sera un boxplot, fait avec la commande go.Box. ensuite on pourra choisir entre le sexe, dans le if, ou l'âge, dans le elif, à afficher dans le graphique. Enfin on définit dans une callback ce qu'afficheront les différents menus, leurs titres et graphiques. On utilise ici aussi un branchement conditionnel selon le pathname de la page. Et on lance notre application Dash avec le programme Main. Le code de cette application est à retrouver dans le document [DashApp](https://github.com/MaartinShz/AIMatch/blob/96a92086651a3c1cf6d7df437d752cc6ca37c886/DashApp.py)
+Ici par exemple le graphique affiché sera un boxplot, fait avec la commande go.Box. ensuite on pourra choisir entre le sexe, dans le if, ou l'âge, dans le elif, à afficher dans le graphique. Enfin on définit dans une callback ce qu'afficheront les différents menus, leurs titres et graphiques. On utilise ici aussi un branchement conditionnel selon le pathname de la page. Et on lance notre application Dash avec le programme Main. Le code de cette application est à retrouver dans le document [DashApp](https://github.com/MaartinShz/AIMatch/blob/96a92086651a3c1cf6d7df437d752cc6ca37c886/DashApp.py).
 
 ## Déploiement sous Heroku
+ Pour déployer notre application nous avons utilisé heroku, qui héberge notre application gratuitement. En paramétrant l'application, nous choisissons qu'elle nous lise du python. On s'assure qu'elle fasse tourner la bonne version de python, ici la 3.9. Une fois paramétré correctement, on déploie manuellement notre explication avec Heroku, qui génère un lien avec notre application hébergée!
+
+ ## Informations fichiers
+
+Dans le folder data, on retrouve les bases de données qu'on a utilisé:
+
+[La base de données initiale](https://github.com/MaartinShz/AIMatch/blob/0d9e8f2b394d4f50eab6a09209255c710708d09d/data/train.csv), sans aucune retouche
+
+[La base de données nettoyée pour créer le modèle](https://github.com/MaartinShz/AIMatch/blob/0d9e8f2b394d4f50eab6a09209255c710708d09d/data/df_clean.csv)
+
+[Notre colonne de prédictions](https://github.com/MaartinShz/AIMatch/blob/0d9e8f2b394d4f50eab6a09209255c710708d09d/data/submissions.csv), obtenue suite à l'utilisation de notre modèle.
+
+
+Dans les fichiers restants on a:
+
+[La base de données pour l'application](https://github.com/MaartinShz/AIMatch/blob/0d9e8f2b394d4f50eab6a09209255c710708d09d/data/trainClean.csv), légérement nettoyée mais avec plus de variable que pour le modèle.
+
+[Le code de notre application Dash](https://github.com/MaartinShz/AIMatch/blob/fd414669af78d612238ebeaa35c52569d6c9fac3/DashApp.py)
+
+[Le code de la recherche de modèles](https://github.com/MaartinShz/AIMatch/blob/59d320783bda7fd0a304b97bb3bc75e92816a47b/submission.ipynb)
+
+[Ajout des librairies nécessaires](https://github.com/MaartinShz/AIMatch/blob/59d320783bda7fd0a304b97bb3bc75e92816a47b/requirements.txt)
+
+[Lancer sous la version 3.9 de Python](https://github.com/MaartinShz/AIMatch/blob/59d320783bda7fd0a304b97bb3bc75e92816a47b/runtime.txt)
+
+[Recodage des données pour l'application Dash](https://github.com/MaartinShz/AIMatch/blob/59d320783bda7fd0a304b97bb3bc75e92816a47b/modele.py)
+
+[Fichier de configuration Heroku](https://github.com/MaartinShz/AIMatch/blob/59d320783bda7fd0a304b97bb3bc75e92816a47b/Procfile)
+
+Dans le folder assets, on a les éléments visuels nécessaires à notre application
