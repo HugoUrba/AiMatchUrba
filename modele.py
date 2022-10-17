@@ -1,5 +1,5 @@
 import pandas as pd
-data = pd.read_csv('train.csv',on_bad_lines="skip",delimiter=";")
+data = pd.read_csv('data/train.csv',on_bad_lines="skip",delimiter=";")
 #recodage sexe
 data.loc[:,'gender'][data.loc[:,'gender']==1]='Homme'
 data.loc[:,'gender'][data.loc[:,'gender']==0]='Femme'
@@ -38,4 +38,4 @@ data.iloc[:,64:70]=data.iloc[:,64:70].replace(",",".",regex=True)
 data.iloc[:,64:70]=data.iloc[:,64:70].astype(float)
 
 
-data.to_csv('trainClean.csv', index=False)
+data.to_csv('data/trainClean.csv', index=False)

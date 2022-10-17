@@ -20,10 +20,13 @@ import numpy as np
 import plotly.express as px
 import plotly.graph_objs as go
 
+from PIL import Image
+pil_image = Image.open("assets/affiche-importance-var.png")
+
 #########################################################################################################################
 # manipulation des données
 # importation données
-data = pd.read_csv('trainClean.csv',on_bad_lines="skip",delimiter=",")
+data = pd.read_csv('data/trainClean.csv',on_bad_lines="skip",delimiter=",")
 #print(data.info())
 
 #graph répartition âge
@@ -170,7 +173,7 @@ def render_page_content(pathname):
                                 {'label': 'Fun', 'value': 'fun1_1'},
                                 {'label': 'Ambitious', 'value': 'amb1_1'},
                                 {'label': ' Has shared interests/hobbies', 'value': 'shar1_1'}],
-                                 value='attr1_1'),
+                                 value='attr1_1',style={'width':'50%'}),
 
                     dcc.RadioItems(id='radio_input',
                                    options=[
@@ -183,17 +186,15 @@ def render_page_content(pathname):
                 ],
                     style={'border' : '1px black solid','float':'left','width':'99%','height':'600px'})
                 
-                
+            
                 ]
 ###############################################################
     elif pathname == "/ExplicationModele":
         return [
-                html.H1('Explication Modèle',
-                        style={'textAlign':'center'}),
-                dcc.Graph(id='bargraph',
-                         figure=px.bar(data, barmode='group', x='career_c',
-                         y=['gender']))
-                ]
+            html.H1("Coefficients sur l’importance des variables de notre Modèle", style={'color' :'black','text-align':'center'}),
+            
+            html.Div(html.Img(src=pil_image))
+            ]
 ###############################################################
 # If the user tries to reach a different page, return a 404 message
     return dbc.Jumbotron(

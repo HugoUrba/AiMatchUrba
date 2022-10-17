@@ -14,7 +14,7 @@ import plotly.graph_objs as go
 pil_image = Image.open("affiche-importance-var.png")
 # importation données
 #data = pd.read_csv('df_clean.csv')
-data = pd.read_csv('train.csv',on_bad_lines="skip",delimiter=";")
+data = pd.read_csv('data/train.csv',on_bad_lines="skip",delimiter=";")
 print(data.info())
 
 #recodage sexe
