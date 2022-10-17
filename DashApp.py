@@ -21,7 +21,6 @@ import plotly.express as px
 import plotly.graph_objs as go
 
 from PIL import Image
-pil_image = Image.open("assets/affiche-importance-var.png")
 
 #########################################################################################################################
 # manipulation des données
@@ -41,6 +40,10 @@ datacar=datanew['career_c']
 
 #graphique décision
 decision=data.loc[:,('dec_o','gender','age','career_c','income')]
+
+################################
+afficheimportance = Image.open("assets/affiche-importance-var.png")
+logo = Image.open("assets/logo2.png")
 #########################################################################################################################
 # CSS / regle stylistique
 CONTENT_STYLE = {
@@ -61,11 +64,13 @@ SIDEBAR_STYLE = {
 }
 
 #########################################################################################################################
-# Partie de l'App sur le modèle d'une App SPA
+# Partie de l'App sur le modèle d'une App SPA ( Single page Application)
+
+# Partie MENU
 sidebar = html.Div(
     [
-        html.H1("Match Ai App", style={'color' :'red','text-align':'center'}),
-        html.H2("Menu", className="display-4"),
+        #html.H1("Match Ai App", style={'color' :'red','text-align':'center'}),
+        html.Div(html.Img(src=logo,width='200',height='200',alt='logo'),style={'text-align':'center'}),
         html.Hr(),
         
         dbc.Nav([
@@ -77,6 +82,8 @@ sidebar = html.Div(
    ],
    style=SIDEBAR_STYLE,
 )
+
+# Partie Contenu
 content = html.Div(id="page-content", children=[], style=CONTENT_STYLE)
 
 #########################################################################################################################
@@ -184,7 +191,7 @@ def render_page_content(pathname):
                     
                     dcc.Graph(id='boxplot_output')
                 ],
-                    style={'border' : '1px black solid','float':'left','width':'99%','height':'600px'})
+                    style={'border' : '1px black solid','float':'left','width':'99%','height':'600px'}),html.Hr()
                 
             
                 ]
@@ -193,7 +200,7 @@ def render_page_content(pathname):
         return [
             html.H1("Coefficients sur l’importance des variables de notre Modèle", style={'color' :'black','text-align':'center'}),
             
-            html.Div(html.Img(src=pil_image))
+            html.Div(html.Img(src=afficheimportance))
             ]
 ###############################################################
 # If the user tries to reach a different page, return a 404 message
