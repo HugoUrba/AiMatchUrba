@@ -42,17 +42,23 @@ datacar=datanew['career_c']
 decision=data.loc[:,('dec_o','gender','age','career_c','income')]
 
 ################################
+
 afficheimportance = Image.open("assets/affiche-importance-var.png")
 logo = Image.open("assets/logo2.png")
+logoEntreprise = Image.open("assets/logo.png")
+
+
 #########################################################################################################################
 # CSS / regle stylistique
+
+#style des de la partie contenu des graph,etc...
 CONTENT_STYLE = {
     "margin-left": "18rem",
     "margin-right": "2rem",
     "padding": "2rem 1rem",
 }
 
-
+#style du menu
 SIDEBAR_STYLE = {
     "position": "fixed",
     "top": 0,
@@ -65,15 +71,13 @@ SIDEBAR_STYLE = {
 
 #########################################################################################################################
 # Partie de l'App sur le modèle d'une App SPA ( Single page Application)
-
 # Partie MENU
 sidebar = html.Div(
     [
-        #html.H1("Match Ai App", style={'color' :'red','text-align':'center'}),
         html.Div(html.Img(src=logo,width='200',height='200',alt='logo'),style={'text-align':'center'}),
         html.Hr(),
         
-        dbc.Nav([
+        dbc.Nav([#liste des page du menu
             dbc.NavLink("Présentation des Profils", href="/PresentationdesProfils", active="exact"),html.Hr(),
             dbc.NavLink("Profil type", href="/ProfilType", active="exact"),html.Hr(),
             dbc.NavLink("Explication Modèle", href="/ExplicationModele", active="exact"),html.Hr(),
@@ -84,7 +88,7 @@ sidebar = html.Div(
 )
 
 # Partie Contenu
-content = html.Div(id="page-content", children=[], style=CONTENT_STYLE)
+content = html.Div(id="page-content", children=[], style=CONTENT_STYLE)# vide au chargement # rempli avec un callback
 
 #########################################################################################################################
 # DASH Application
@@ -97,8 +101,11 @@ app.layout = html.Div([
     sidebar,
     content
 ])
+
 #########################################################################################################################
-# echange de donnée de L'app / CallBack
+# Echange de donnée de L'app / CallBack
+
+#callback pour les graphes avec nos filtres
 @app.callback(
     Output(component_id='boxplot_output', component_property='figure'),
     Input(component_id='radio_input', component_property='value'),
@@ -127,18 +134,27 @@ def get_data_table(option):
         fig.update_layout(title_text="Pourcentage de oui reçus selon le type de travail", title_x=0.5)
 
     return fig
+
 #########################################################################################################################
+# callback permettant la navigation et le chargement des contenus dans la partie dédiée
+
 @app.callback(
     Output("page-content", "children"),
    [Input("url", "pathname")]
 )
 def render_page_content(pathname):
-    #val = decision.loc[:, option]
-    #fig = go.Figure(data=[go.Histogram(histfunc="avg",x=val,y=decision.iloc[:,0])])
-    #fig.update_layout(title_text='Pourcentage de oui reçus', title_x=0.5)
-    #return fig
+    if pathname == "/": #page accueil
+        return [
+                html.Br(),
+                html.H1('🎉 Bienvenue 🎉', style={'textAlign':'center'}),
+                html.Br(),
+                html.Div(html.Img(src=logoEntreprise,alt='logoEntreprise'),style={'text-align':'center'}),
+                html.Br(),
+                html.H2(" 💖💖💖 Ici commence l'Amour avec un Grand Ai 💖💖💖 ",className="alert alert-danger",style={'text-align':'center'})
+                ]
 ###############################################################
-    if pathname == "/PresentationdesProfils":
+
+    elif pathname == "/PresentationdesProfils": #page Presentation des données
         return [
                 html.H1('Présentation des Profils',
                         style={'textAlign':'center'}),
@@ -152,20 +168,19 @@ def render_page_content(pathname):
                         figure={'data': [go.Histogram(histfunc="count",x=datacar)],
                             'layout': {'title': 'Répartition des métiers'}
                                 }),
-                    style={'border' : '1px black solid','float':'left','width':'69%','height':'500px'}),
-                
-                
+                    style={'border' : '1px black solid','float':'left','width':'69%','height':'500px'}),                   
                 ]
 ###############################################################
-    elif pathname == "/ProfilType":
+
+    elif pathname == "/ProfilType": #page profil qui match le plus
         return [
                 html.Div(children=[
                     html.Label('Choisissez un critère'),
                     dcc.RadioItems(id='select_input',
-                        options=[
-                                {'label': 'Sexe', 'value': 'gender'},
-                                {'label': 'Travail', 'value': 'career_c'},
-                                {'label': 'Age', 'value': 'age'}
+                        options=[ # filtres du graph
+                                {'label': 'Sexe ', 'value': 'gender'},
+                                {'label': 'Travail ', 'value': 'career_c'},
+                                {'label': 'Age ', 'value': 'age'}
                                 ],className='select_categ',
                          value='gender'),
 
@@ -174,7 +189,7 @@ def render_page_content(pathname):
                 
                 html.Div(children=[
                     html.Label('Choisissez un critère'),
-                    dcc.Dropdown(id='dropdown_input',
+                    dcc.Dropdown(id='dropdown_input', # filtres du graph en liste déroulante
                                 options=[{'label': 'Attractive', 'value': 'attr1_1'},
                                 {'label': 'Sincere', 'value': 'sinc1_1'},
                                 {'label': 'Intelligent', 'value': 'intel1_1'},
@@ -185,8 +200,8 @@ def render_page_content(pathname):
 
                     dcc.RadioItems(id='radio_input',
                                    options=[
-                                       {'label': 'Sexe', 'value': 'gender'},
-                                       {'label': 'Age', 'value': 'age'}
+                                       {'label': 'Sexe ', 'value': 'gender'},
+                                       {'label': 'Age ', 'value': 'age'}
                                    ],
                                    value='gender'),
                     
@@ -197,14 +212,17 @@ def render_page_content(pathname):
             
                 ]
 ###############################################################
-    elif pathname == "/ExplicationModele":
+
+    elif pathname == "/ExplicationModele": #page pour expliquer la solution
         return [
             html.H1("Coefficients sur l’importance des variables de notre Modèle", style={'color' :'black','text-align':'center'}),
             
             html.Div(html.Img(src=afficheimportance))
             ]
+    
 ###############################################################
-# If the user tries to reach a different page, return a 404 message
+# Si l'utilisateur essaye d'accéder à des pages différentes, retourne une erreur 404 
+
     return dbc.Jumbotron(
         [
             html.H1("404: Not found", className="text-danger"),
@@ -216,6 +234,6 @@ def render_page_content(pathname):
 
 #########################################################################################################################
 # Programme Main
+
 if __name__ == '__main__':
-    print('Start')
     app.run_server(debug=True, port=8050) # démarrer l'application DASH

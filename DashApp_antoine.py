@@ -10,11 +10,13 @@ import numpy as np
 from PIL import Image
 import plotly.express as px
 import plotly.graph_objs as go
+import plotly
+from itertools import cycle
 
 pil_image = Image.open("affiche-importance-var.png")
 # importation données
 #data = pd.read_csv('df_clean.csv')
-data = pd.read_csv('data/train.csv',on_bad_lines="skip",delimiter=";")
+data = pd.read_csv('train.csv',on_bad_lines="skip",delimiter=";")
 print(data.info())
 
 #recodage sexe
@@ -60,13 +62,24 @@ datanew=datanew.drop_duplicates()
 dataage=datanew['age']
 
 #graph répartition catégories travail
-datanew=data.loc[:,('iid','career_c')]
+datanew=data.loc[:,('iid','career_c','gender')]
 datanew=datanew.drop_duplicates()
-datacar=datanew['career_c']
+datacar=datanew.loc[:,('career_c','gender')]
 
 #graphique décision
 decision=data.loc[:,('dec_o','gender','age','career_c','income')]
 
+#figure
+
+"""
+colorsG = {'Homme': 'steelblue',
+           'Femme': 'firebrick'}
+fig1 = go.Figure()
+for t in datacar['gender'].unique():
+    dfp = datacar[datacar['gender'] == t]
+    fig1.add_traces(go.Histogram(histfunc="count", x=datacar['career_c'], name=t,
+                                marker_color=colorsG[t]))
+"""
 
 app = dash.Dash()
 
@@ -90,7 +103,6 @@ app.layout = html.Div([
                 'layout': {'title': 'Répartition des métiers'}
                     }),
         style={'border' : '1px black solid','float':'left','width':'69%','height':'450px'}),
-
 
     html.Div(children=[
         html.Label('Choisissez un critère'),
@@ -138,14 +150,21 @@ app.layout = html.Div([
     Input(component_id='select_input', component_property='value'))
 def get_data_table(option):
     val = decision.loc[:, option]
-    fig = go.Figure(data=[go.Histogram(histfunc="avg",x=val,y=decision.iloc[:,0])])
+    #fig = go.Figure(data=[go.Histogram(histfunc="avg",x=val,y=decision.iloc[:,0],color='option')])
+    fig = go.Figure()
+    colorsG = {'Homme': 'steelblue',
+              'Femme': 'firebrick'}
+
+    for t in decision['gender'].unique():
+        dfp = decision[decision['gender'] == t]
+        fig.add_traces(go.Histogram(histfunc="avg",x=dfp[option], y=decision.iloc[:, 0], name=t,
+                              marker_color=colorsG[t]))
     if (option=='gender'):
         fig.update_layout(title_text="Pourcentage de oui reçus selon le sexe", title_x=0.5)
     elif (option=='age'):
         fig.update_layout(title_text="Pourcentage de oui reçus selon l'âge", title_x=0.5)
     elif (option=='career_c'):
         fig.update_layout(title_text="Pourcentage de oui reçus selon le type de travail", title_x=0.5)
-
     return fig
 
 @app.callback(
