@@ -90,6 +90,7 @@ content = html.Div(id="page-content", children=[], style=CONTENT_STYLE)
 # DASH Application
 
 app = dash.Dash(__name__, external_stylesheets=[dbc.themes.BOOTSTRAP])
+server = app.server
 
 app.layout = html.Div([
     dcc.Location(id="url"),
