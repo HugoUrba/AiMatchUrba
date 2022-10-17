@@ -44,6 +44,8 @@ decision=data.loc[:,('dec_o','gender','age','career_c','income')]
 ################################
 afficheimportance = Image.open("assets/affiche-importance-var.png")
 logo = Image.open("assets/logo2.png")
+logoEntreprise = Image.open("assets/logo.png")
+
 #########################################################################################################################
 # CSS / regle stylistique
 CONTENT_STYLE = {
@@ -138,7 +140,17 @@ def render_page_content(pathname):
     #fig.update_layout(title_text='Pourcentage de oui reçus', title_x=0.5)
     #return fig
 ###############################################################
-    if pathname == "/PresentationdesProfils":
+    if pathname == "/":
+        return [
+                html.Br(),
+                html.H1('🎉 Bienvenue 🎉', style={'textAlign':'center'}),
+                html.Br(),
+                html.Div(html.Img(src=logoEntreprise,alt='logoEntreprise'),style={'text-align':'center'}),
+                html.Br(),
+                html.H2(" 💖💖💖 Ici commence l'Amour avec un Grand Ai 💖💖💖 ",className="alert alert-danger",style={'text-align':'center'})
+                ]
+###############################################################
+    elif pathname == "/PresentationdesProfils":
         return [
                 html.H1('Présentation des Profils',
                         style={'textAlign':'center'}),
@@ -163,9 +175,9 @@ def render_page_content(pathname):
                     html.Label('Choisissez un critère'),
                     dcc.RadioItems(id='select_input',
                         options=[
-                                {'label': 'Sexe', 'value': 'gender'},
-                                {'label': 'Travail', 'value': 'career_c'},
-                                {'label': 'Age', 'value': 'age'}
+                                {'label': 'Sexe ', 'value': 'gender'},
+                                {'label': 'Travail ', 'value': 'career_c'},
+                                {'label': 'Age ', 'value': 'age'}
                                 ],className='select_categ',
                          value='gender'),
 
@@ -185,8 +197,8 @@ def render_page_content(pathname):
 
                     dcc.RadioItems(id='radio_input',
                                    options=[
-                                       {'label': 'Sexe', 'value': 'gender'},
-                                       {'label': 'Age', 'value': 'age'}
+                                       {'label': 'Sexe ', 'value': 'gender'},
+                                       {'label': 'Age ', 'value': 'age'}
                                    ],
                                    value='gender'),
                     
