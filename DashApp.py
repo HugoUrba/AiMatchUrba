@@ -9,10 +9,10 @@ Created on Fri Oct  7 22:28:15 2022
 #pip install -Iv dash-bootstrap-components==0.11.0
 
 import dash
-#import dash_core_components as dcc
-#import dash_html_components as html
-from dash import html
-from dash import dcc
+import dash_core_components as dcc
+import dash_html_components as html
+#from dash import html
+#from dash import dcc
 import dash_bootstrap_components as dbc
 
 from dash.dependencies import Input, Output
@@ -25,7 +25,7 @@ import plotly.graph_objs as go
 
 
 # importation données
-data = pd.read_csv('train.csv',on_bad_lines="skip",delimiter=";")
+data = pd.read_csv('trainClean.csv',on_bad_lines="skip",delimiter=",")
 #print(data.info())
 
 #graphique décision
@@ -54,9 +54,9 @@ sidebar = html.Div(
         html.Hr(),
         
         dbc.Nav([
-            dbc.NavLink("Home", href="/", active="exact"),html.Hr(),
-            dbc.NavLink("Page 1", href="/page-1", active="exact"),html.Hr(),
-            dbc.NavLink("Page 2", href="/page-2", active="exact"),html.Hr(),
+            dbc.NavLink("Statistiques Descriptives", href="/", active="exact"),html.Hr(),
+            dbc.NavLink("Profil type", href="/page-1", active="exact"),html.Hr(),
+            dbc.NavLink("Explication Modèle", href="/page-2", active="exact"),html.Hr(),
             ],vertical=True,pills=True,
         ),
    ],
