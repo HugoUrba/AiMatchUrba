@@ -6,7 +6,20 @@ EsayDate est un site de rencontre qui organise des soirées "speed-dating". Leur
 
 **modèle de prédiction avec gradient boosting**
 
-Nous avons commencé par nettoyer et explorer les données, notamment en utilisant la méthode des KNN voisins pour remplacer les valeurs manquantes. Notre fichier df_clean.csv est notre jeu de données nettoyé.
+Nous avons commencé par nettoyer et explorer les données, notamment en utilisant la méthode des KNN voisins pour remplacer les valeurs manquantes. Nous avons vu qu'il y avait un fort déséquilibre entre les matchs et non-matchs, nous avons donc utilisé la méthode SMOTE pour rééquilibrer notre jeu de données, en créant des données fictive. Puis nous avons normalisé le jeu de données.
+```python
+from imblearn.over_sampling import SMOTE
+from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import StandardScaler
+
+X, y = SMOTE().fit_resample(X_train, y_train)
+
+from sklearn.preprocessing import StandardScaler
+scaler = StandardScaler().fit(X_train)
+X_train_scale = scaler.transform(X_train)
+X_test_scale = scaler.transform(X_test
+```
+Notre fichier [Train Clean](https://github.com/MaartinShz/AIMatch/blob/18e84fa2920afdcc8fd0d708c88ad878a22c4793/data/df_clean.csv) est notre jeu de données nettoyé.
 Nous avons ensuite testé et optimisé différents modèles de prédiction (AdaBoost, RandomForest, réseaux de neuronnes...), nous nous sommes tournés vers le modèle de prédiction Gradient boosting, et on commence par importer scikit-learn et on séparer nos données en apprentissage et test (70/30):
 ```python
 import sklearn
@@ -22,11 +35,11 @@ predictions = gb_clf.predict(XTest)
  Avec la méthode GridSearch, on teste les hyperparamètres qui nous donnent une meilleure précision et un meilleur f1 score.
  On se base sur les 25 variables ayant le plus d'importance parmi les 70 variables du fichier de données d'origine ([train.csv](https://github.com/MaartinShz/AIMatch/blob/819f0a26da7b63e36c98d91d741f59dd3cfef28b/data/train.csv). Dans le fichier .py modèle, vous retrouverez les lignes de code de ce modèle de prédiction type 'boîte noire'. Au terme de la procédure, on a isolé la colonne qui prédisait, selon notre modèle, si les deux personnes allaient match mutuellement, fichier qu'on a posté sur notre compétition Kaggle afin de voir la précision de notre modèle sur l'échantillon test. Cette colonne de prédiction se trouve dans le fichier [submission](https://github.com/MaartinShz/AIMatch/blob/c0175122d37296fb8fc2e4e106d2628ab0e58826/data/submissions.csv)
 
-## Déploiement de l'application Dash
+## Création de l'application Dash
 
 **Création de l'application Dash**
 
-Nous avons ensuite codé une application à l'aide de la librairie Dash. On a recodé les variables afin de rendre les graphiques plus lisibles et importer un jeu de données avec le plus de variables possibles. Le but ici est de faire de la visualisation de données des utilisateurs et utilisatrices du site de rencontre. La première partie définit les règles stylistiques pour la page qui sera générée.
+Nous avons ensuite codé une application à l'aide de la librairie Dash. On a recodé les variables afin de rendre les graphiques plus lisibles et importer un jeu de données avec le plus de variables possibles (fichier utilisé: [Train Clean](https://github.com/MaartinShz/AIMatch/blob/18e84fa2920afdcc8fd0d708c88ad878a22c4793/data/train.csv)). Le but ici est de faire de la visualisation de données des utilisateurs et utilisatrices du site de rencontre. La première partie définit les règles stylistiques pour la page qui sera générée.
 On a ensuite créé un menu, sous forme de barre verticale:
 ```python
 sidebar = html.Div(
@@ -73,3 +86,5 @@ def make_box(abs,ord):
     return fig
 ```
 Ici par exemple le graphique affiché sera un boxplot, fait avec la commande go.Box. ensuite on pourra choisir entre le sexe, dans le if, ou l'âge, dans le elif, à afficher dans le graphique. Enfin on définit dans une callback ce qu'afficheront les différents menus, leurs titres et graphiques. On utilise ici aussi un branchement conditionnel selon le pathname de la page. Et on lance notre application Dash avec le programme Main. Le code de cette application est à retrouver dans le document [DashApp](https://github.com/MaartinShz/AIMatch/blob/96a92086651a3c1cf6d7df437d752cc6ca37c886/DashApp.py)
+
+## Déploiement sous Heroku
