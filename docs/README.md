@@ -1,6 +1,6 @@
 ## Bienvenue sur AI match by EasyDate :wave:
 
-EsayDate est un site de rencontre qui organise des soirées "speed-dating". Leur objectif est de faire se rencontrer des personnes qui vont "matcher" mutuellement au terme du moins de rendez-vous possibles
+EasyDate est un site de rencontre qui organise des soirées "speed-dating". Leur objectif est de faire se rencontrer des personnes qui vont "matcher" mutuellement au terme du moins de rendez-vous possibles
 
 ## Prédictions de match 
 
