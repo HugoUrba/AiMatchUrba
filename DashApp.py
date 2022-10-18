@@ -181,7 +181,7 @@ def render_page_content(pathname):
                                 {'label': 'Sexe ', 'value': 'gender'},
                                 {'label': 'Travail ', 'value': 'career_c'},
                                 {'label': 'Age ', 'value': 'age'}
-                                ],className='select_categ',
+                                ],
                          value='gender'),
 
                     dcc.Graph(id='graph_output')
@@ -216,8 +216,19 @@ def render_page_content(pathname):
     elif pathname == "/ExplicationModele": #page pour expliquer la solution
         return [
             html.H1("Coefficients sur l’importance des variables de notre Modèle", style={'color' :'black','text-align':'center'}),
+            html.H1('Gradient Boosting', style={'textAlign':'center'}),
+            html.Div(html.Img(src=afficheimportance)),
+            html.Br(),
+            html.P("Les variables les plus importantes dans notre modèle sont : \n"),
+            html.P(" int_corr : indice de correspondance des centres d'intérêt  \n"),
+            html.P(" pf_o_fun : l'importance de l'humour pour le partenaire \n "),
+            html.P(" pf_o_att : l'importance de la beauté pour le partenaire \n "),
             
-            html.Div(html.Img(src=afficheimportance))
+            html.Br(),
+            html.H2(' Comprendre le boosting de gradient', style={'textAlign':'left'}),
+            html.Br(),
+            html.P("Le boosting de gradient est un type de boosting d’apprentissage de la machine. Il repose fortement sur la prédiction que le prochain modèle réduira les erreurs de prédiction lorsqu’il sera mélangé avec les précédents. L’idée principale est d’établir des résultats cibles pour ce prochain modèle afin de minimiser les erreurs. \n "),
+
             ]
     
 ###############################################################
