@@ -220,6 +220,7 @@ def render_page_content(pathname):
             html.Div(html.Img(src=afficheimportance)),
             html.Br(),
             html.P("Les variables les plus importantes dans notre modèle sont : \n"),
+            html.P(" pf_o_sin : la préférence déclarée du partenaire sur la sincérité \n "),
             html.P(" age_o : age du partenaire \n "),
             html.P(" int_corr : indice de correspondance des centres d'intérêt  \n"),
             html.Br(),
