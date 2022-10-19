@@ -130,3 +130,5 @@ Dans les fichiers restants on a:
 [Recodage des données pour l'application Dash](https://github.com/MaartinShz/AIMatch/blob/59d320783bda7fd0a304b97bb3bc75e92816a47b/modele.py)
 
 [Fichier de configuration Heroku](https://github.com/MaartinShz/AIMatch/blob/59d320783bda7fd0a304b97bb3bc75e92816a47b/Procfile)
+
+Lien de notre Application hébergée sur Heroku : https://match-ai.herokuapp.com/
