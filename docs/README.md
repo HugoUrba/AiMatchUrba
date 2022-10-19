@@ -101,6 +101,20 @@ Dans le répertoire data, on retrouve les bases de données qu'on a utilisé:
 [Notre colonne de prédictions](https://github.com/MaartinShz/AIMatch/blob/0d9e8f2b394d4f50eab6a09209255c710708d09d/data/submissions.csv), obtenue suite à l'utilisation de notre modèle.
 
 
+Dans le répertoire assets, on a les éléments visuels nécessaires à notre application.
+
+
+Et dans le répertoire docs, on retrouve la documentation pour le clients et les personnes qui voudraient reprendre nos codes:
+
+[Le guide utilisateur](https://github.com/MaartinShz/AIMatch/blob/5d524f66a8c6318ddfc1173bf803c3449fcd0e66/docs/Guide%20utilisateur.pdf) de l'appli.
+
+[L'environnement virtuel](https://github.com/MaartinShz/AIMatch/blob/5d524f66a8c6318ddfc1173bf803c3449fcd0e66/docs/MatchAi-environment.yml) pour le code de l'appli.
+
+[La documentation technique du code](https://github.com/MaartinShz/AIMatch/blob/5d524f66a8c6318ddfc1173bf803c3449fcd0e66/docs/documentation_technique.ipynb)
+
+Et le fichier ReadME.
+
+
 Dans les fichiers restants on a:
 
 [La base de données pour l'application](https://github.com/MaartinShz/AIMatch/blob/0d9e8f2b394d4f50eab6a09209255c710708d09d/data/trainClean.csv), légérement nettoyée mais avec plus de variable que pour le modèle.
@@ -116,5 +130,3 @@ Dans les fichiers restants on a:
 [Recodage des données pour l'application Dash](https://github.com/MaartinShz/AIMatch/blob/59d320783bda7fd0a304b97bb3bc75e92816a47b/modele.py)
 
 [Fichier de configuration Heroku](https://github.com/MaartinShz/AIMatch/blob/59d320783bda7fd0a304b97bb3bc75e92816a47b/Procfile)
-
-Dans le répertoire assets, on a les éléments visuels nécessaires à notre application
